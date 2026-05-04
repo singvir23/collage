@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>A Place I'm Going To — Viraaj</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Space+Mono:wght@400;700&family=IM+Fell+English:ital@1&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #1e1e1e;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 48px 24px;
+  min-height: 100vh;
+}
+
+/* Page = 8.5 × 11 in at 96 dpi = 816 × 1056 px */
+.page {
+  width: 816px;
+  height: 1056px;
+  background: #ECE7DB;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+
+/* ─── Photos ─── */
+.photo {
+  position: absolute;
+  overflow: hidden;
+  border: 5px solid #fff;
+  box-shadow: 2px 3px 0 rgba(0,0,0,0.12), 4px 8px 18px rgba(0,0,0,0.15);
+  z-index: 5;
+}
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/*
+  Layout plan (pixels, 816 wide × 1056 tall):
+
+  ROW 1  (y 60–90):   Header block left, eyebrow right
+  ROW 2  (y 90–340):  [GG Bridge large, left]   [Nyhavn day, right]
+  GAP    (y 340–360): Caption row
+  ROW 3  (y 360–600): [SF Skyline, left]         [Nyhavn night, right]
+  GAP    (y 600–620): Caption row
+  ROW 4  (y 620–820): [Painted Ladies, left]  [sticky+torn mid]  [Lombard, right]
+  FOOTER (y 840–):    Rule + footer text
+*/
+
+/* P1 – Golden Gate Bridge: top-left, large hero */
+.p1 {
+  top: 88px; left: 28px;
+  width: 440px; height: 248px;
+  transform: rotate(-1.2deg);
+}
+
+/* P2 – Nyhavn day: top-right */
+.p2 {
+  top: 62px; right: 26px;
+  width: 300px; height: 200px;
+  transform: rotate(1.5deg);
+}
+
+/* P3 – SF skyline dusk: mid-left */
+.p3 {
+  top: 374px; left: 26px;
+  width: 370px; height: 224px;
+  transform: rotate(0.7deg);
+}
+
+/* P4 – Nyhavn night: mid-right */
+.p4 {
+  top: 352px; right: 24px;
+  width: 356px; height: 240px;
+  transform: rotate(-1.6deg);
+}
+
+/* P5 – Painted Ladies: bottom-left */
+.p5 {
+  top: 630px; left: 28px;
+  width: 260px; height: 180px;
+  transform: rotate(1.2deg);
+}
+
+/* P6 – Lombard Street: bottom-right */
+.p6 {
+  top: 618px; right: 26px;
+  width: 288px; height: 192px;
+  transform: rotate(-1.0deg);
+}
+
+/* ─── Text layers ─── */
+.abs { position: absolute; }
+
+/* Header */
+.header { top: 22px; left: 28px; z-index: 20; }
+.hed-main {
+  display: block;
+  background: #1C1B2E;
+  color: #ECE7DB;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 34px;
+  padding: 6px 14px 4px;
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+.hed-sub {
+  display: inline-block;
+  background: #AD3519;
+  color: #fff;
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  margin-top: 4px;
+}
+
+/* Eyebrow */
+.eyebrow {
+  top: 22px; right: 28px;
+  font-family: 'Space Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 1.8px;
+  color: #888;
+  text-transform: uppercase;
+  text-align: right;
+  line-height: 1.8;
+  z-index: 20;
+}
+
+/* Captions — placed just below each photo */
+.cap {
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.8px;
+  color: #666;
+  text-transform: uppercase;
+  line-height: 1.4;
+  z-index: 20;
+}
+/* Below P1 */
+.cap1 { top: 344px; left: 30px; }
+/* Below P2 */
+.cap2 { top: 270px; right: 28px; text-align: right; }
+/* Below P3 */
+.cap3 { top: 606px; left: 28px; }
+/* Below P4 */
+.cap4 { top: 600px; right: 26px; text-align: right; }
+/* Below P5 */
+.cap5 { top: 818px; left: 30px; }
+/* Below P6 */
+.cap6 { top: 818px; right: 28px; text-align: right; }
+
+/* Sticky notes — occupy the center gap in row 4 */
+.sticky {
+  font-family: 'Space Mono', monospace;
+  font-size: 8.5px;
+  line-height: 1.65;
+  padding: 10px 13px;
+  color: #1C1B2E;
+  box-shadow: 2px 3px 0 rgba(0,0,0,0.1);
+  z-index: 15;
+}
+.sticky-y {
+  background: #F7E46B;
+  transform: rotate(-2.5deg);
+  top: 636px;
+  left: 316px;
+  width: 140px;
+}
+.sticky-g {
+  background: #BDE89A;
+  transform: rotate(2deg);
+  top: 748px;
+  left: 308px;
+  width: 152px;
+  font-size: 7.5px;
+}
+
+/* Torn phrase */
+.torn {
+  background: #1C1B2E;
+  color: #ECE7DB;
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 10px;
+  padding: 6px 10px 5px;
+  line-height: 1.4;
+  z-index: 15;
+  transform: rotate(0.5deg);
+  top: 700px;
+  left: 305px;
+  width: 162px;
+}
+
+/* Tape strips */
+.tape {
+  position: absolute;
+  background: rgba(245, 210, 80, 0.5);
+  z-index: 22;
+  border-radius: 1px;
+}
+.t1 { width: 58px; height: 12px; top: 82px;  left: 370px; transform: rotate(-6deg); }
+.t2 { width: 46px; height: 12px; top: 346px; right: 50px;  transform: rotate(5deg); }
+.t3 { width: 40px; height: 12px; top: 368px; left: 20px;   transform: rotate(-3deg); }
+.t4 { width: 52px; height: 12px; top: 614px; left: 250px;  transform: rotate(4deg); }
+
+/* Red arrow in center gap between rows 2 and 3 */
+.arrow {
+  top: 342px; left: 340px;
+  font-family: 'Space Mono', monospace;
+  font-size: 22px;
+  color: #AD3519;
+  line-height: 1;
+  z-index: 20;
+}
+
+/* Footer */
+.rule {
+  position: absolute;
+  background: #1C1B2E;
+  height: 1.5px;
+  opacity: 0.6;
+  z-index: 20;
+  bottom: 80px;
+  left: 28px;
+  right: 28px;
+}
+.footer-l {
+  bottom: 48px; left: 28px;
+  background: #AD3519;
+  color: #fff;
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  z-index: 20;
+}
+.footer-r {
+  bottom: 48px; right: 28px;
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 10px;
+  color: #777;
+  z-index: 20;
+}
+.footer-c {
+  bottom: 26px; left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Space Mono', monospace;
+  font-size: 6px;
+  letter-spacing: 1.2px;
+  color: #aaa;
+  text-transform: uppercase;
+  white-space: nowrap;
+  z-index: 20;
+}
+
+@media print {
+  body { background: none; padding: 0; margin: 0; }
+  .page {
+    width: 8.5in;
+    height: 11in;
+    box-shadow: none;
+  }
+  @page { size: 8.5in 11in; margin: 0; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Tape -->
+  <div class="tape t1"></div>
+  <div class="tape t2"></div>
+  <div class="tape t3"></div>
+  <div class="tape t4"></div>
+
+  <!-- Header -->
+  <div class="abs header">
+    <span class="hed-main">a place I'm going to</span><br>
+    <span class="hed-sub">Viraaj &nbsp;·&nbsp; DIS Copenhagen &nbsp;·&nbsp; May 2026</span>
+  </div>
+
+  <!-- Eyebrow -->
+  <div class="abs eyebrow">Copenhagen → San Francisco<br>Spring 2026</div>
+
+  <!-- P1: Golden Gate Bridge -->
+  <div class="photo p1">
+    <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=900&q=85&fit=crop&auto=format"
+         alt="Golden Gate Bridge, San Francisco">
+  </div>
+
+  <!-- P2: Nyhavn day -->
+  <div class="photo p2">
+    <img src="https://files.guidedanmark.org/files/382/164757_Nyhavn_Jacob-Schjrring-og-Simon-Lau.jpg?width=1600&height=727&mode=crop&scale=both&format=webp&webp.quality=60"
+         alt="Nyhavn, Copenhagen">
+  </div>
+
+  <!-- P3: SF skyline at dusk -->
+  <div class="photo p3">
+    <img src="https://t3.ftcdn.net/jpg/02/09/50/92/360_F_209509249_El7Kup1kzjdFiWa0ioGzbpVO3SaqMFQR.jpg"
+         alt="San Francisco skyline at dusk">
+  </div>
+
+  <!-- P4: Nyhavn at night -->
+  <div class="photo p4">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6lLya4Q_CtmHCOMu56T1ty0W6Xm9GJQAJCg&s"
+         alt="Nyhavn at night, Copenhagen">
+  </div>
+
+  <!-- P5: Painted Ladies -->
+  <div class="photo p5">
+    <img src="https://www.travelinusa.us/wp-content/uploads/sites/3/2017/11/Painted-Ladies-San-Francisco-01.jpg"
+         alt="Painted Ladies, Alamo Square, San Francisco">
+  </div>
+
+  <!-- P6: Lombard Street -->
+  <div class="photo p6">
+    <img src="https://www.travelinusa.us/wp-content/uploads/sites/3/2017/06/San-Francisco-Lombard-Street-01.jpg"
+         alt="Lombard Street, San Francisco">
+  </div>
+
+  <!-- Captions -->
+  <div class="abs cap cap1">golden gate bridge, sf</div>
+  <div class="abs cap cap2">nyhavn, copenhagen</div>
+  <div class="abs cap cap3">sf skyline across the bay</div>
+  <div class="abs cap cap4">nyhavn at night</div>
+  <div class="abs cap cap5">painted ladies, alamo sq.</div>
+  <div class="abs cap cap6">lombard street, sf</div>
+
+  <!-- Arrow -->
+  <div class="abs arrow">→</div>
+
+  <!-- Sticky notes -->
+  <div class="abs sticky sticky-y">bring the<br>slowness<br>with you</div>
+  <div class="abs sticky sticky-g">still DJ.<br>still drum.<br>still walk.</div>
+
+  <!-- Torn phrase -->
+  <div class="abs torn">somewhere<br>the water<br>is nearby</div>
+
+  <!-- Footer -->
+  <div class="rule"></div>
+  <div class="abs footer-l">CPH → SFO · May 14, 2026 · internship starts May 18</div>
+  <div class="abs footer-r">— Viraaj</div>
+  <div class="abs footer-c">a place I'm going to, and the person I'm bringing with me</div>
+
+</div>
+</body>
+</html>
